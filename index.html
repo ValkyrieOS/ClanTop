@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top de Servidores</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      }
+
+      .gradient-text {
+        background: linear-gradient(45deg, #60a5fa, #a78bfa, #f472b6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .server-card {
+        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(10px);
+        border-left: 4px solid transparent;
+        overflow: hidden;
+      }
+
+      .server-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.5s;
+      }
+
+      .server-card:hover::before {
+        left: 100%;
+      }
+
+      .server-card:hover {
+        transform: translateX(10px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .server-card:hover .rank-circle {
+        transform: scale(1.1) rotate(360deg);
+      }
+
+      .server-card:hover .progress-bar {
+        filter: brightness(1.2);
+      }
+
+      .top-5:hover {
+        background: rgba(59, 130, 246, 0.1);
+      }
+
+      .rank-circle {
+        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      .progress-bar {
+        transition: all 0.5s ease-in-out;
+      }
+
+      .search-input {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
+      }
+
+      .search-input:focus {
+        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+        transform: translateY(-2px);
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .animate-pulse {
+        animation: pulse 2s infinite;
+      }
+    </style>
+  </head>
+
+  <body class="text-gray-300 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <header class="text-center mb-16">
+        <h1
+          class="text-5xl sm:text-6xl font-bold mb-6 gradient-text animate-pulse"
+        >
+          Top de Servidores
+        </h1>
+        <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+          Explora los servidores más populares de nuestra comunidad
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-8 mb-12">
+          <div
+            class="bg-gray-800 rounded-lg px-6 py-4 backdrop-filter backdrop-blur-lg transition-all duration-300 hover:bg-gray-700"
+          >
+            <span
+              id="totalServers"
+              class="block text-3xl font-bold gradient-text mb-1"
+            ></span>
+            <p class="text-sm text-gray-400">Servidores Totales</p>
+          </div>
+          <div
+            class="bg-gray-800 rounded-lg px-6 py-4 backdrop-filter backdrop-blur-lg transition-all duration-300 hover:bg-gray-700"
+          >
+            <span
+              id="totalMembers"
+              class="block text-3xl font-bold gradient-text mb-1"
+            ></span>
+            <p class="text-sm text-gray-400">Miembros Totales</p>
+          </div>
+        </div>
+
+        <div class="max-w-md mx-auto">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Buscar servidor por nombre..."
+            class="w-full px-6 py-4 rounded-full search-input text-white placeholder-gray-500 outline-none text-lg"
+          />
+        </div>
+      </header>
+
+      <div id="serverList" class="space-y-4">
+        <!-- Los servidores se insertarán aquí -->
+      </div>
+      <div id="noResults" class="hidden text-center py-12">
+        <p class="text-xl text-gray-400">
+          No se encontraron servidores que coincidan con tu búsqueda
+        </p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
