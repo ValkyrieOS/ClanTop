@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Top de Servidores</title>
+    <title>ClanList 1.0.1</title>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
@@ -24,56 +24,19 @@
       }
 
       .server-card {
-        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all 0.3s ease;
         background: rgba(30, 41, 59, 0.7);
         backdrop-filter: blur(10px);
-        border-left: 4px solid transparent;
-        overflow: hidden;
-      }
-
-      .server-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
-        );
-        transition: 0.5s;
-      }
-
-      .server-card:hover::before {
-        left: 100%;
+        border-left: 4px solid #3b82f6;
       }
 
       .server-card:hover {
-        transform: translateX(10px) scale(1.02);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      }
-
-      .server-card:hover .rank-circle {
-        transform: scale(1.1) rotate(360deg);
-      }
-
-      .server-card:hover .progress-bar {
-        filter: brightness(1.2);
-      }
-
-      .top-5:hover {
-        background: rgba(59, 130, 246, 0.1);
-      }
-
-      .rank-circle {
-        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       }
 
       .progress-bar {
-        transition: all 0.5s ease-in-out;
+        transition: width 0.5s ease-in-out;
       }
 
       .search-input {
@@ -84,40 +47,42 @@
 
       .search-input:focus {
         box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
-        transform: translateY(-2px);
       }
 
-      @keyframes pulse {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
+      .tab-button {
+        transition: all 0.3s ease;
       }
 
-      .animate-pulse {
-        animation: pulse 2s infinite;
+      .tab-button.active {
+        background-color: #3b82f6;
+        color: white;
+      }
+
+      .comparison-card {
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .comparison-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       }
     </style>
   </head>
-
   <body class="text-gray-300 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-6xl mx-auto">
       <header class="text-center mb-16">
-        <h1
-          class="text-5xl sm:text-6xl font-bold mb-6 gradient-text animate-pulse"
-        >
-          Top de Servidores
+        <h1 class="text-5xl sm:text-6xl font-bold mb-6 gradient-text">
+          ClanList 1.0.1
         </h1>
         <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-          Explora los servidores más populares de nuestra comunidad
+          Explora y compara los servidores más populares de nuestra comunidad
         </p>
 
         <div class="flex flex-wrap justify-center gap-8 mb-12">
           <div
-            class="bg-gray-800 rounded-lg px-6 py-4 backdrop-filter backdrop-blur-lg transition-all duration-300 hover:bg-gray-700"
+            class="bg-gray-800 rounded-lg px-6 py-4 backdrop-filter backdrop-blur-lg"
           >
             <span
               id="totalServers"
@@ -126,7 +91,7 @@
             <p class="text-sm text-gray-400">Servidores Totales</p>
           </div>
           <div
-            class="bg-gray-800 rounded-lg px-6 py-4 backdrop-filter backdrop-blur-lg transition-all duration-300 hover:bg-gray-700"
+            class="bg-gray-800 rounded-lg px-6 py-4 backdrop-filter backdrop-blur-lg"
           >
             <span
               id="totalMembers"
@@ -134,6 +99,21 @@
             ></span>
             <p class="text-sm text-gray-400">Miembros Totales</p>
           </div>
+        </div>
+
+        <div class="flex justify-center space-x-4 mb-8">
+          <button
+            id="listTab"
+            class="tab-button px-6 py-2 rounded-full bg-gray-700 hover:bg-gray-600"
+          >
+            Lista
+          </button>
+          <button
+            id="compareTab"
+            class="tab-button px-6 py-2 rounded-full bg-gray-700 hover:bg-gray-600"
+          >
+            Comparar
+          </button>
         </div>
 
         <div class="max-w-md mx-auto">
@@ -146,13 +126,38 @@
         </div>
       </header>
 
-      <div id="serverList" class="space-y-4">
-        <!-- Los servidores se insertarán aquí -->
+      <div id="listSection">
+        <div id="serverList" class="space-y-4">
+          <!-- Los servidores se insertarán aquí -->
+        </div>
+        <div id="noResults" class="hidden text-center py-12">
+          <p class="text-xl text-gray-400">
+            No se encontraron servidores que coincidan con tu búsqueda
+          </p>
+        </div>
       </div>
-      <div id="noResults" class="hidden text-center py-12">
-        <p class="text-xl text-gray-400">
-          No se encontraron servidores que coincidan con tu búsqueda
-        </p>
+
+      <div id="compareSection" class="hidden">
+        <h2 class="text-3xl font-bold mb-6 text-center gradient-text">
+          Comparador de Servidores
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Grupo 1</h3>
+            <div id="selectedServers1" class="space-y-4">
+              <!-- Los servidores seleccionados del grupo 1 se mostrarán aquí -->
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Grupo 2</h3>
+            <div id="selectedServers2" class="space-y-4">
+              <!-- Los servidores seleccionados del grupo 2 se mostrarán aquí -->
+            </div>
+          </div>
+        </div>
+        <div id="comparisonResult" class="mt-8 hidden">
+          <!-- Los resultados de la comparación se mostrarán aquí -->
+        </div>
       </div>
     </div>
 
