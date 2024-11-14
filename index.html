@@ -1,324 +1,354 @@
 <!DOCTYPE html>
 <html lang="es" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Top de Servidores</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: "#ecfdf5",
-                100: "#d1fae5",
-                200: "#a7f3d0",
-                300: "#6ee7b7",
-                400: "#34d399",
-                500: "#10b981",
-                600: "#059669",
-                700: "#047857",
-                800: "#065f46",
-                900: "#064e3b",
-                950: "#022c22",
-              },
-              secondary: {
-                50: "#eef2ff",
-                100: "#e0e7ff",
-                200: "#c7d2fe",
-                300: "#a5b4fc",
-                400: "#818cf8",
-                500: "#6366f1",
-                600: "#4f46e5",
-                700: "#4338ca",
-                800: "#3730a3",
-                900: "#312e81",
-                950: "#1e1b4b",
-              },
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top de Servidores</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: "#f0fdfa",
+              100: "#ccfbf1",
+              200: "#99f6e4",
+              300: "#5eead4",
+              400: "#2dd4bf",
+              500: "#14b8a6",
+              600: "#0d9488",
+              700: "#0f766e",
+              800: "#115e59",
+              900: "#134e4a",
+              950: "#042f2e",
             },
-            animation: {
-              gradient: "gradient 8s ease infinite",
-              "fade-in": "fadeIn 0.5s ease-out",
-              "slide-up": "slideUp 0.5s ease-out",
-              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-            },
-            keyframes: {
-              gradient: {
-                "0%, 100%": {
-                  "background-size": "200% 200%",
-                  "background-position": "left center",
-                },
-                "50%": {
-                  "background-size": "200% 200%",
-                  "background-position": "right center",
-                },
-              },
-              fadeIn: {
-                "0%": { opacity: "0" },
-                "100%": { opacity: "1" },
-              },
-              slideUp: {
-                "0%": { transform: "translateY(20px)", opacity: "0" },
-                "100%": { transform: "translateY(0)", opacity: "1" },
-              },
+            secondary: {
+              50: "#fdf4ff",
+              100: "#fae8ff",
+              200: "#f5d0fe",
+              300: "#f0abfc",
+              400: "#e879f9",
+              500: "#d946ef",
+              600: "#c026d3",
+              700: "#a21caf",
+              800: "#86198f",
+              900: "#701a75",
+              950: "#4a044e",
             },
           },
-          fontFamily: {
-            sans: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "BlinkMacSystemFont",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
+          animation: {
+            gradient: "gradient 8s ease infinite",
+            "fade-in": "fadeIn 0.5s ease-out",
+            "slide-up": "slideUp 0.5s ease-out",
+            "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+            progress: "progress 1s ease-out forwards",
+          },
+          keyframes: {
+            gradient: {
+              "0%, 100%": {
+                "background-size": "200% 200%",
+                "background-position": "left center",
+              },
+              "50%": {
+                "background-size": "200% 200%",
+                "background-position": "right center",
+              },
+            },
+            fadeIn: {
+              "0%": { opacity: "0" },
+              "100%": { opacity: "1" },
+            },
+            slideUp: {
+              "0%": { transform: "translateY(20px)", opacity: "0" },
+              "100%": { transform: "translateY(0)", opacity: "1" },
+            },
+            progress: {
+              "0%": { width: "0%" },
+            },
           },
         },
-      };
-    </script>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+        fontFamily: {
+          sans: [
+            "Inter",
+            "ui-sans-serif",
+            "system-ui",
+            "-apple-system",
+            "BlinkMacSystemFont",
+            "Segoe UI",
+            "Roboto",
+            "Helvetica Neue",
+            "Arial",
+            "Noto Sans",
+            "sans-serif",
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
+            "Segoe UI Symbol",
+            "Noto Color Emoji",
+          ],
+        },
+      },
+    };
+  </script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
-      .server-card {
-        transition: all 0.3s ease-in-out;
-      }
-      .server-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      }
-      .progress-bar {
-        transition: width 1s ease-in-out;
-      }
-      .pagination-button {
-        transition: all 0.3s ease-in-out;
-      }
-      .pagination-button:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      .pagination-button:active:not(:disabled) {
-        transform: translateY(0);
-      }
-    </style>
-  </head>
-  <body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-      <h1
-        class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-primary-400 to-secondary-400 text-transparent bg-clip-text animate-gradient"
-      >
-        Top de Servidores
-      </h1>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-in">
-          <p id="totalServers" class="text-3xl font-semibold text-primary-400">
-            0
-          </p>
-          <p class="text-sm text-gray-400">Servidores Totales</p>
-        </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-in">
-          <p
-            id="totalMembers"
-            class="text-3xl font-semibold text-secondary-400"
-          >
-            0
-          </p>
-          <p class="text-sm text-gray-400">Miembros Totales</p>
-        </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-in">
-          <p id="onacMembers" class="text-3xl font-semibold text-yellow-400">
-            0
-          </p>
-          <p class="text-sm text-gray-400">Miembros ONAC</p>
-        </div>
+    .server-card {
+      transition: all 0.3s ease-in-out;
+    }
+
+    .server-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .progress-bar {
+      transition: width 1s ease-in-out;
+    }
+
+    .pagination-button {
+      transition: all 0.3s ease-in-out;
+    }
+
+    .pagination-button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .pagination-button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .chart-container {
+      height: 300px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <h1
+      class="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-primary-400 to-secondary-400 text-transparent bg-clip-text animate-gradient">
+      Top de Servidores
+    </h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-in">
+        <p id="totalServers" class="text-3xl font-semibold text-primary-400">
+          0
+        </p>
+        <p class="text-sm text-gray-400">Servidores Totales</p>
       </div>
-      <div class="relative mb-8 animate-slide-up">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Buscar servidor por nombre..."
-          class="w-full p-4 pl-12 border rounded-full bg-gray-800 text-white border-gray-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 transition-all duration-300 ease-in-out"
-        />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 absolute left-4 top-4 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-in">
+        <p id="totalMembers" class="text-3xl font-semibold text-secondary-400">
+          0
+        </p>
+        <p class="text-sm text-gray-400">Miembros Totales</p>
       </div>
-      <div id="serverList" class="space-y-6"></div>
-      <p
-        id="noResults"
-        class="text-center text-gray-400 mt-8 hidden animate-fade-in"
-      >
-        No se encontraron servidores que coincidan con tu búsqueda
-      </p>
-      <div
-        class="flex flex-wrap justify-center items-center mt-8 space-x-2 space-y-2"
-      >
-        <button
-          id="prevPage"
-          class="pagination-button px-4 py-2 bg-primary-600 text-white rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ease-in-out hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
-        >
-          Anterior
-        </button>
-        <div
-          id="pageNumbers"
-          class="flex flex-wrap justify-center items-center space-x-2 space-y-2"
-        ></div>
-        <button
-          id="nextPage"
-          class="pagination-button px-4 py-2 bg-primary-600 text-white rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ease-in-out hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
-        >
-          Siguiente
-        </button>
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg animate-fade-in">
+        <p id="onacMembers" class="text-3xl font-semibold text-yellow-400">
+          0
+        </p>
+        <p class="text-sm text-gray-400">Miembros ONAC</p>
       </div>
     </div>
-    <script>
-      // Variables globales
-      let allServers = [];
-      let onacServers = [];
-      let filteredServers = [];
-      let currentPage = 1;
-      const serversPerPage = 10;
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+      <button id="filterAll"
+        class="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300">
+        Todos
+      </button>
+      <button id="filterOnac"
+        class="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300">
+        ONAC
+      </button>
+      <button id="filterNonOnac"
+        class="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300">
+        No ONAC
+      </button>
+    </div>
+    <div class="relative mb-8 animate-slide-up">
+      <input type="text" id="searchInput" placeholder="Buscar servidor por nombre..."
+        class="w-full p-4 pl-12 border rounded-full bg-gray-800 text-white border-gray-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 transition-all duration-300 ease-in-out" />
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute left-4 top-4 text-gray-400" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+    <div class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Distribución de Miembros</h2>
+      <div class="chart-container">
+        <canvas id="memberDistributionChart"></canvas>
+      </div>
+    </div>
+    <div id="serverList" class="space-y-6"></div>
+    <p id="noResults" class="text-center text-gray-400 mt-8 hidden animate-fade-in">
+      No se encontraron servidores que coincidan con tu búsqueda
+    </p>
+    <div class="flex flex-wrap justify-center items-center mt-8 space-x-2 space-y-2">
+      <button id="prevPage"
+        class="pagination-button px-4 py-2 bg-primary-600 text-white rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ease-in-out hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50">
+        Anterior
+      </button>
+      <div id="pageNumbers" class="flex flex-wrap justify-center items-center space-x-2 space-y-2"></div>
+      <button id="nextPage"
+        class="pagination-button px-4 py-2 bg-primary-600 text-white rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ease-in-out hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50">
+        Siguiente
+      </button>
+    </div>
+    <button id="scrollToTop"
+      class="fixed bottom-8 right-8 bg-primary-600 text-white p-3 rounded-full shadow-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300 hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+  </div>
+  <script>
+    // Variables globales
+    let allServers = [];
+    let onacServers = [];
+    let filteredServers = [];
+    let currentPage = 1;
+    const serversPerPage = 10;
+    let currentFilter = "all";
+    let memberDistributionChart;
 
-      // Elementos del DOM
-      const searchInput = document.getElementById("searchInput");
-      const serverList = document.getElementById("serverList");
-      const noResults = document.getElementById("noResults");
-      const totalServersElement = document.getElementById("totalServers");
-      const totalMembersElement = document.getElementById("totalMembers");
-      const onacMembersElement = document.getElementById("onacMembers");
-      const prevPageButton = document.getElementById("prevPage");
-      const nextPageButton = document.getElementById("nextPage");
-      const pageNumbersContainer = document.getElementById("pageNumbers");
+    // Elementos del DOM
+    const searchInput = document.getElementById("searchInput");
+    const serverList = document.getElementById("serverList");
+    const noResults = document.getElementById("noResults");
+    const totalServersElement = document.getElementById("totalServers");
+    const totalMembersElement = document.getElementById("totalMembers");
+    const onacMembersElement = document.getElementById("onacMembers");
+    const prevPageButton = document.getElementById("prevPage");
+    const nextPageButton = document.getElementById("nextPage");
+    const pageNumbersContainer = document.getElementById("pageNumbers");
+    const scrollToTopButton = document.getElementById("scrollToTop");
+    const filterAllButton = document.getElementById("filterAll");
+    const filterOnacButton = document.getElementById("filterOnac");
+    const filterNonOnacButton = document.getElementById("filterNonOnac");
 
-      // Función para cargar los datos de los servidores
-      async function loadServerData() {
-        try {
-          const [serversResponse, onacResponse] = await Promise.all([
-            fetch("lista_completa_servidores.json"),
-            fetch("onac.json"),
-          ]);
-          const serversData = await serversResponse.json();
-          const onacData = await onacResponse.json();
+    // Función para cargar los datos de los servidores
+    async function loadServerData() {
+      try {
+        const [serversResponse, onacResponse] = await Promise.all([
+          fetch("lista_completa_servidores.json"),
+          fetch("onac.json"),
+        ]);
+        const serversData = await serversResponse.json();
+        const onacData = await onacResponse.json();
 
-          allServers = serversData.filter(
-            (server) => server.name !== "ONAC NauticMC"
-          );
-
-          // Procesar los datos de ONAC
-          onacServers = onacData
-            .map((onacServerName) => {
-              const server = allServers.find((s) => s.name === onacServerName);
-              if (server) {
-                server.isOnacMember = true;
-                return server;
-              }
-              return null;
-            })
-            .filter((server) => server !== null);
-
-          // Calcular el total de miembros de ONAC
-          const onacTotalMembers = onacServers.reduce(
-            (sum, server) => sum + server.members,
-            0
-          );
-
-          // Crear un servidor "virtual" para ONAC
-          const onacVirtualServer = {
-            name: "ONAC (Total)",
-            members: onacTotalMembers,
-            isOnac: true,
-            rank: 0, // Se asignará después
-          };
-
-          // Añadir el servidor virtual de ONAC a la lista de todos los servidores
-          allServers.push(onacVirtualServer);
-
-          // Ordenar los servidores por número de miembros
-          allServers.sort((a, b) => b.members - a.members);
-
-          // Asignar rangos
-          allServers.forEach((server, index) => {
-            server.rank = index + 1;
-          });
-
-          filteredServers = allServers;
-          updateStats();
-          renderServers();
-
-          // Event listeners
-          searchInput.addEventListener("input", handleSearch);
-          prevPageButton.addEventListener("click", () =>
-            changePage(currentPage - 1)
-          );
-          nextPageButton.addEventListener("click", () =>
-            changePage(currentPage + 1)
-          );
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
-
-      function updateStats() {
-        const totalServers = allServers.length;
-        const totalMembers = allServers.reduce(
-          (sum, server) => (server.isOnac ? sum : sum + server.members),
-          0
+        allServers = serversData.filter(
+          (server) => server.name !== "ONAC NauticMC"
         );
-        const onacMembers =
-          allServers.find((server) => server.isOnac)?.members || 0;
 
-        totalServersElement.textContent = totalServers.toLocaleString();
-        totalMembersElement.textContent = totalMembers.toLocaleString();
-        onacMembersElement.textContent = onacMembers.toLocaleString();
-      }
+        // Procesar los datos de ONAC
+        onacServers = onacData
+          .map((onacServerName) => {
+            const server = allServers.find((s) => s.name === onacServerName);
+            if (server) {
+              server.isOnacMember = true;
+              return server;
+            }
+            return null;
+          })
+          .filter((server) => server !== null);
 
-      function renderServers() {
-        const startIndex = (currentPage - 1) * serversPerPage;
-        const endIndex = startIndex + serversPerPage;
-        const serversToShow = filteredServers.slice(startIndex, endIndex);
-
-        serverList.innerHTML = "";
-        noResults.classList.toggle("hidden", serversToShow.length > 0);
-
-        const totalMembers = allServers.reduce(
-          (sum, server) => (server.isOnac ? sum : sum + server.members),
+        // Calcular el total de miembros de ONAC
+        const onacTotalMembers = onacServers.reduce(
+          (sum, server) => sum + server.members,
           0
         );
 
-        serversToShow.forEach((server, index) => {
-          const card = document.createElement("div");
-          card.className =
-            "bg-gray-800 p-6 rounded-lg shadow-lg relative server-card animate-slide-up";
-          card.style.animationDelay = `${index * 0.1}s`;
+        // Crear un servidor "virtual" para ONAC
+        const onacVirtualServer = {
+          name: "ONAC (Total)",
+          members: onacTotalMembers,
+          isOnac: true,
+          rank: 0, // Se asignará después
+        };
 
-          const percentageDomination = (
-            (server.members / totalMembers) *
-            100
-          ).toFixed(2);
+        // Añadir el servidor virtual de ONAC a la lista de todos los servidores
+        allServers.push(onacVirtualServer);
 
-          if (server.isOnac) {
-            card.innerHTML = `
+        // Ordenar los servidores por número de miembros
+        allServers.sort((a, b) => b.members - a.members);
+
+        // Asignar rangos
+        allServers.forEach((server, index) => {
+          server.rank = index + 1;
+        });
+
+        filteredServers = allServers;
+        updateStats();
+        renderServers();
+        initMemberDistributionChart();
+
+        // Event listeners
+        searchInput.addEventListener("input", handleSearch);
+        prevPageButton.addEventListener("click", () =>
+          changePage(currentPage - 1)
+        );
+        nextPageButton.addEventListener("click", () =>
+          changePage(currentPage + 1)
+        );
+        scrollToTopButton.addEventListener("click", scrollToTop);
+        filterAllButton.addEventListener("click", () => filterServers("all"));
+        filterOnacButton.addEventListener("click", () =>
+          filterServers("onac")
+        );
+        filterNonOnacButton.addEventListener("click", () =>
+          filterServers("non-onac")
+        );
+
+        window.addEventListener("scroll", toggleScrollToTopButton);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    function updateStats() {
+      const totalServers = allServers.length;
+      const totalMembers = allServers.reduce(
+        (sum, server) => (server.isOnac ? sum : sum + server.members),
+        0
+      );
+      const onacMembers =
+        allServers.find((server) => server.isOnac)?.members || 0;
+
+      totalServersElement.textContent = totalServers.toLocaleString();
+      totalMembersElement.textContent = totalMembers.toLocaleString();
+      onacMembersElement.textContent = onacMembers.toLocaleString();
+    }
+
+    function renderServers() {
+      const startIndex = (currentPage - 1) * serversPerPage;
+      const endIndex = startIndex + serversPerPage;
+      const serversToShow = filteredServers.slice(startIndex, endIndex);
+
+      serverList.innerHTML = "";
+      noResults.classList.toggle("hidden", serversToShow.length > 0);
+
+      const totalMembers = allServers.reduce(
+        (sum, server) => (server.isOnac ? sum : sum + server.members),
+        0
+      );
+
+      serversToShow.forEach((server, index) => {
+        const card = document.createElement("div");
+        card.className =
+          "bg-gray-800 p-6 rounded-lg shadow-lg relative server-card animate-slide-up";
+        card.style.animationDelay = `${index * 0.1}s`;
+
+        const percentageDomination = (
+          (server.members / totalMembers) *
+          100
+        ).toFixed(2);
+
+        if (server.isOnac) {
+          card.innerHTML = `
                         <div class="absolute top-4 right-4 bg-yellow-500 text-yellow-900 px-3 py-1 rounded-full text-sm font-semibold">
                             #${server.rank}
                         </div>
@@ -330,139 +360,289 @@
                         </h2>
                         <p class="text-gray-300 mb-3">Miembros totales: ${server.members.toLocaleString()}</p>
                         <div class="w-full bg-gray-700 rounded-full h-3 mb-3">
-                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-300 h-3 rounded-full transition-all duration-500 ease-out progress-bar" style="width: 0%"></div>
+                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-300 h-3 rounded-full transition-all duration-500 ease-out progress-bar" style="width: 0%" data-percentage="${percentageDomination}"></div>
                         </div>
                         <p class="text-sm text-gray-400 mb-4">Dominio total: ${percentageDomination}%</p>
                         <div class="space-y-3">
                             <h3 class="font-semibold text-gray-300">Clanes miembros:</h3>
                             ${onacServers
-                              .map(
-                                (onacServer) => `
-                                <div class="flex justify-between bg-gray-700 p-3 rounded-lg transition-all duration-300 hover:bg-gray-600">
-                                    <span class="text-gray-300">${
-                                      onacServer.name
-                                    }</span>
+              .map(
+                (onacServer) => `
+                                <button class="w-full flex justify-between bg-gray-700 p-3 rounded-lg transition-all duration-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500" data-server-name="${onacServer.name
+                  }">
+                                    <span class="text-gray-300">${onacServer.name
+                  }</span>
                                     <span class="text-gray-400">${(
-                                      (onacServer.members / totalMembers) *
-                                      100
-                                    ).toFixed(2)}%</span>
-                                </div>
+                    (onacServer.members / totalMembers) *
+                    100
+                  ).toFixed(2)}%</span>
+                                </button>
                             `
-                              )
-                              .join("")}
+              )
+              .join("")}
                         </div>
                     `;
-          } else {
-            card.innerHTML = `
+        } else {
+          card.innerHTML = `
                         <div class="absolute top-4 right-4 bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
                             #${server.rank}
                         </div>
                         <h2 class="text-2xl font-semibold text-primary-400 mb-3 flex items-center">
                             ${server.name}
-                            ${
-                              server.isOnacMember
-                                ? `
+                            ${server.isOnacMember
+              ? `
                                 <span class="ml-2 bg-green-500 text-green-900 px-2 py-1 rounded-full text-xs font-bold">
                                     ONAC member
                                 </span>
                             `
-                                : ""
-                            }
+              : ""
+            }
                         </h2>
                         <p class="text-gray-300 mb-3">Miembros: ${server.members.toLocaleString()}</p>
                         <div class="w-full bg-gray-700 rounded-full h-3 mb-3">
-                            <div class="bg-gradient-to-r from-primary-500 to-secondary-500 h-3 rounded-full transition-all duration-500 ease-out progress-bar" style="width: 0%"></div>
+                            <div class="bg-gradient-to-r from-primary-500 to-secondary-500 h-3 rounded-full transition-all duration-500 ease-out progress-bar" style="width: 0%" data-percentage="${percentageDomination}"></div>
                         </div>
                         <p class="text-sm text-gray-400">Dominio: ${percentageDomination}%</p>
                     `;
+        }
+
+        serverList.appendChild(card);
+      });
+
+      // Trigger reflow to start the animation
+      void serverList.offsetWidth;
+
+      // Set the final width for the progress bars
+      const progressBars = document.querySelectorAll(".progress-bar");
+      progressBars.forEach((bar) => {
+        const percentage = bar.getAttribute("data-percentage");
+        bar.style.width = `${percentage}%`;
+      });
+
+      // Add event listeners to ONAC member buttons
+      const onacMemberButtons =
+        document.querySelectorAll("[data-server-name]");
+      onacMemberButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const serverName = button.getAttribute("data-server-name");
+          const serverIndex = allServers.findIndex(
+            (server) => server.name === serverName
+          );
+          if (serverIndex !== -1) {
+            const pageNumber = Math.floor(serverIndex / serversPerPage) + 1;
+            changePage(pageNumber);
+            setTimeout(() => {
+              const serverCard = document.querySelector(
+                `[data-server-name="${serverName}"]`
+              );
+              if (serverCard) {
+                serverCard.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+                serverCard.classList.add(
+                  "ring-4",
+                  "ring-primary-500",
+                  "ring-opacity-50"
+                );
+                setTimeout(() => {
+                  serverCard.classList.remove(
+                    "ring-4",
+                    "ring-primary-500",
+                    "ring-opacity-50"
+                  );
+                }, 2000);
+              }
+            }, 100);
           }
-
-          serverList.appendChild(card);
-
-          // Trigger reflow to start the animation
-          void card.offsetWidth;
-
-          // Set the final width for the progress bar
-          const progressBar = card.querySelector(".progress-bar");
-          progressBar.style.width = `${percentageDomination}%`;
         });
+      });
 
-        updatePagination();
+      updatePagination();
+    }
+
+    function handleSearch() {
+      const searchTerm = searchInput.value.toLowerCase();
+      filterAndRenderServers(searchTerm);
+    }
+
+    function filterServers(filter) {
+      currentFilter = filter;
+      const searchTerm = searchInput.value.toLowerCase();
+      filterAndRenderServers(searchTerm);
+
+      // Update button styles
+      [filterAllButton, filterOnacButton, filterNonOnacButton].forEach(
+        (button) => {
+          button.classList.remove("bg-primary-600", "text-white");
+          button.classList.add("bg-gray-700", "text-white");
+        }
+      );
+
+      const activeButton =
+        filter === "all"
+          ? filterAllButton
+          : filter === "onac"
+            ? filterOnacButton
+            : filterNonOnacButton;
+      activeButton.classList.remove("bg-gray-700");
+      activeButton.classList.add("bg-primary-600");
+    }
+
+    function filterAndRenderServers(searchTerm) {
+      filteredServers = allServers.filter((server) => {
+        const nameMatch = server.name.toLowerCase().includes(searchTerm);
+        const filterMatch =
+          currentFilter === "all" ||
+          (currentFilter === "onac" &&
+            (server.isOnac || server.isOnacMember)) ||
+          (currentFilter === "non-onac" &&
+            !server.isOnac &&
+            !server.isOnacMember);
+        return nameMatch && filterMatch;
+      });
+      currentPage = 1;
+      renderServers();
+      updateMemberDistributionChart();
+    }
+
+    function changePage(newPage) {
+      currentPage = newPage;
+      renderServers();
+      scrollToTop();
+    }
+
+    function updatePagination() {
+      const totalPages = Math.ceil(filteredServers.length / serversPerPage);
+
+      prevPageButton.disabled = currentPage === 1;
+      nextPageButton.disabled = currentPage === totalPages;
+
+      pageNumbersContainer.innerHTML = "";
+
+      const maxVisiblePages = 5;
+      let startPage = Math.max(
+        1,
+        currentPage - Math.floor(maxVisiblePages / 2)
+      );
+      let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+      if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
       }
 
-      function handleSearch() {
-        const searchTerm = searchInput.value.toLowerCase();
-        filteredServers = allServers.filter((server) =>
-          server.name.toLowerCase().includes(searchTerm)
-        );
-        currentPage = 1;
-        renderServers();
-      }
-
-      function changePage(newPage) {
-        currentPage = newPage;
-        renderServers();
-      }
-
-      function updatePagination() {
-        const totalPages = Math.ceil(filteredServers.length / serversPerPage);
-
-        prevPageButton.disabled = currentPage === 1;
-        nextPageButton.disabled = currentPage === totalPages;
-
-        pageNumbersContainer.innerHTML = "";
-
-        const maxVisiblePages = 5;
-        let startPage = Math.max(
-          1,
-          currentPage - Math.floor(maxVisiblePages / 2)
-        );
-        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-        if (endPage - startPage + 1 < maxVisiblePages) {
-          startPage = Math.max(1, endPage - maxVisiblePages + 1);
-        }
-
-        if (startPage > 1) {
-          addPageButton(1);
-          if (startPage > 2) {
-            addEllipsis();
-          }
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-          addPageButton(i);
-        }
-
-        if (endPage < totalPages) {
-          if (endPage < totalPages - 1) {
-            addEllipsis();
-          }
-          addPageButton(totalPages);
+      if (startPage > 1) {
+        addPageButton(1);
+        if (startPage > 2) {
+          addEllipsis();
         }
       }
 
-      function addPageButton(pageNum) {
-        const button = document.createElement("button");
-        button.textContent = pageNum;
-        button.className = `pagination-button px-3 py-1 rounded-full transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 ${
-          pageNum === currentPage
-            ? "bg-primary-600 text-white"
-            : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+      for (let i = startPage; i <= endPage; i++) {
+        addPageButton(i);
+      }
+
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+          addEllipsis();
+        }
+        addPageButton(totalPages);
+      }
+    }
+
+    function addPageButton(pageNum) {
+      const button = document.createElement("button");
+      button.textContent = pageNum;
+      button.className = `pagination-button px-3 py-1 rounded-full transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 ${pageNum === currentPage
+        ? "bg-primary-600 text-white"
+        : "bg-gray-700 text-gray-300 hover:bg-gray-600"
         }`;
-        button.addEventListener("click", () => changePage(pageNum));
-        pageNumbersContainer.appendChild(button);
-      }
+      button.addEventListener("click", () => changePage(pageNum));
+      pageNumbersContainer.appendChild(button);
+    }
 
-      function addEllipsis() {
-        const ellipsis = document.createElement("span");
-        ellipsis.textContent = "...";
-        ellipsis.className = "px-2 text-gray-400";
-        pageNumbersContainer.appendChild(ellipsis);
-      }
+    function addEllipsis() {
+      const ellipsis = document.createElement("span");
+      ellipsis.textContent = "...";
+      ellipsis.className = "px-2 text-gray-400";
+      pageNumbersContainer.appendChild(ellipsis);
+    }
 
-      // Cargar los datos de los servidores al iniciar la página
-      loadServerData();
-    </script>
-  </body>
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+
+    function toggleScrollToTopButton() {
+      if (window.pageYOffset > 300) {
+        scrollToTopButton.classList.remove("hidden");
+      } else {
+        scrollToTopButton.classList.add("hidden");
+      }
+    }
+
+    function initMemberDistributionChart() {
+      const ctx = document.getElementById('memberDistributionChart').getContext('2d');
+      memberDistributionChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: [],
+          datasets: [{
+            data: [],
+            backgroundColor: [],
+            borderColor: [],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                color: 'white'
+              }
+            }
+          }
+        }
+      });
+      updateMemberDistributionChart();
+    }
+
+    function updateMemberDistributionChart() {
+      const topServers = filteredServers.slice(0, 5);
+      const otherServers = filteredServers.slice(5);
+
+      const labels = topServers.map(server => server.name);
+      labels.push('Otros');
+
+      const data = topServers.map(server => server.members);
+      const otherMembersSum = otherServers.reduce((sum, server) => sum + server.members, 0);
+      data.push(otherMembersSum);
+
+      const backgroundColors = [
+        'rgba(255, 99, 132, 0.8)',
+        'rgba(54, 162, 235, 0.8)',
+        'rgba(255, 206, 86, 0.8)',
+        'rgba(75, 192, 192, 0.8)',
+        'rgba(153, 102, 255, 0.8)',
+        'rgba(255, 159, 64, 0.8)'
+      ];
+
+      memberDistributionChart.data.labels = labels;
+      memberDistributionChart.data.datasets[0].data = data;
+      memberDistributionChart.data.datasets[0].backgroundColor = backgroundColors;
+      memberDistributionChart.data.datasets[0].borderColor = backgroundColors.map(color => color.replace('0.8', '1'));
+
+      memberDistributionChart.update();
+    }
+
+    // Cargar los datos de los servidores al iniciar la página
+    loadServerData();
+  </script>
+</body>
+
 </html>
