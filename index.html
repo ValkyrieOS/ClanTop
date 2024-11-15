@@ -12,22 +12,37 @@
           extend: {
             colors: {
               primary: {
-                50: "#f0f9ff",
-                100: "#e0f2fe",
-                200: "#bae6fd",
-                300: "#7dd3fc",
-                400: "#38bdf8",
-                500: "#0ea5e9",
-                600: "#0284c7",
-                700: "#0369a1",
-                800: "#075985",
-                900: "#0c4a6e",
-                950: "#082f49",
+                50: "#eff6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                300: "#93c5fd",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+                950: "#172554",
+              },
+              secondary: {
+                50: "#f8fafc",
+                100: "#f1f5f9",
+                200: "#e2e8f0",
+                300: "#cbd5e1",
+                400: "#94a3b8",
+                500: "#64748b",
+                600: "#475569",
+                700: "#334155",
+                800: "#1e293b",
+                900: "#0f172a",
+                950: "#020617",
               },
             },
             animation: {
               "fade-in": "fadeIn 0.5s ease-out",
               "slide-up": "slideUp 0.5s ease-out",
+              "pulse-slow": "pulse 3s infinite",
+              "bounce-slow": "bounce 3s infinite",
             },
             keyframes: {
               fadeIn: {
@@ -68,36 +83,84 @@
       .progress-bar {
         transition: width 0.5s ease-out;
       }
+
+      .gradient-text {
+        background: linear-gradient(45deg, #3b82f6, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
     </style>
   </head>
-  <body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+  <body
+    class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 font-sans min-h-screen"
+  >
     <div class="container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold text-center mb-8 text-primary-400">
+      <h1
+        class="text-4xl md:text-5xl font-bold text-center mb-8 gradient-text animate-pulse-slow"
+      >
         Top de Servidores
       </h1>
 
       <!-- Estadísticas generales -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div class="bg-gray-800 p-4 rounded-lg shadow-lg animate-fade-in">
-          <p id="totalServers" class="text-2xl font-semibold text-primary-400">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+        <div
+          class="bg-gray-800 bg-opacity-50 p-6 rounded-xl shadow-lg animate-fade-in transform hover:scale-105 transition-all duration-300 card-hover"
+        >
+          <p
+            id="totalServers"
+            class="text-3xl font-semibold text-primary-400 mb-2"
+          >
             0
           </p>
           <p class="text-sm text-gray-400">Servidores Totales</p>
         </div>
         <div
-          class="bg-gray-800 p-4 rounded-lg shadow-lg animate-fade-in"
+          class="bg-gray-800 bg-opacity-50 p-6 rounded-xl shadow-lg animate-fade-in transform hover:scale-105 transition-all duration-300 card-hover"
           style="animation-delay: 0.1s"
         >
-          <p id="totalMembers" class="text-2xl font-semibold text-primary-400">
+          <p
+            id="totalMembers"
+            class="text-3xl font-semibold text-primary-400 mb-2"
+          >
             0
           </p>
           <p class="text-sm text-gray-400">Miembros Totales</p>
         </div>
         <div
-          class="bg-gray-800 p-4 rounded-lg shadow-lg animate-fade-in"
+          class="bg-gray-800 bg-opacity-50 p-6 rounded-xl shadow-lg animate-fade-in transform hover:scale-105 transition-all duration-300 card-hover"
           style="animation-delay: 0.2s"
         >
-          <p id="onacMembers" class="text-2xl font-semibold text-primary-400">
+          <p
+            id="onacMembers"
+            class="text-3xl font-semibold text-primary-400 mb-2"
+          >
             0
           </p>
           <p class="text-sm text-gray-400">Miembros ONAC</p>
@@ -105,23 +168,27 @@
       </div>
 
       <!-- Filtros y búsqueda -->
-      <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
-        <div class="flex flex-wrap gap-2">
+      <div
+        class="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12"
+      >
+        <div
+          class="flex flex-wrap justify-center sm:justify-start gap-3 w-full sm:w-auto"
+        >
           <button
             id="filterAll"
-            class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
+            class="px-6 py-3 bg-primary-600 text-white rounded-full hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-105"
           >
             Todos
           </button>
           <button
             id="filterOnac"
-            class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
+            class="px-6 py-3 bg-gray-700 text-white rounded-full hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-105"
           >
             ONAC
           </button>
           <button
             id="filterNonOnac"
-            class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
+            class="px-6 py-3 bg-gray-700 text-white rounded-full hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-105"
           >
             No ONAC
           </button>
@@ -130,12 +197,12 @@
           type="text"
           id="searchInput"
           placeholder="Buscar servidor..."
-          class="px-4 py-2 bg-gray-800 text-white rounded-md border border-gray-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
+          class="w-full sm:w-auto px-6 py-3 bg-gray-800 bg-opacity-50 text-white rounded-full border border-gray-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300 placeholder-gray-400"
         />
       </div>
 
       <!-- Lista de servidores -->
-      <div id="serverList" class="space-y-4"></div>
+      <div id="serverList" class="space-y-6"></div>
       <p
         id="noResults"
         class="text-center text-gray-400 mt-8 hidden animate-fade-in"
@@ -144,17 +211,22 @@
       </p>
 
       <!-- Paginación -->
-      <div class="flex justify-center items-center mt-8 space-x-2">
+      <div
+        class="flex flex-wrap justify-center items-center mt-12 space-x-2 space-y-2"
+      >
         <button
           id="prevPage"
-          class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-6 py-3 bg-primary-600 text-white rounded-full hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
         >
           Anterior
         </button>
-        <div id="pageNumbers" class="flex items-center space-x-2"></div>
+        <div
+          id="pageNumbers"
+          class="flex flex-wrap items-center justify-center space-x-2 space-y-2"
+        ></div>
         <button
           id="nextPage"
-          class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-6 py-3 bg-primary-600 text-white rounded-full hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
         >
           Siguiente
         </button>
@@ -304,7 +376,7 @@
         serversToShow.forEach((server, index) => {
           const card = document.createElement("div");
           card.className =
-            "bg-gray-800 p-4 rounded-lg shadow-lg animate-slide-up";
+            "bg-gray-800 bg-opacity-50 p-6 rounded-xl shadow-lg animate-slide-up card-hover";
           card.style.animationDelay = `${index * 0.05}s`;
 
           const percentageDomination = (
@@ -313,27 +385,29 @@
           ).toFixed(2);
 
           card.innerHTML = `
-                    <div class="flex items-center justify-between mb-2">
-                        <h2 class="text-xl font-semibold ${
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
+                        <h2 class="text-xl sm:text-2xl font-semibold ${
                           server.isOnac ? "text-yellow-400" : "text-primary-400"
-                        }">
+                        } mb-2 sm:mb-0">
                             ${server.name}
+                        </h2>
+                        <div class="flex flex-wrap gap-2">
                             ${
                               server.isOnac
-                                ? '<span class="ml-2 bg-yellow-500 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold">ONAC</span>'
+                                ? '<span class="bg-yellow-500 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold animate-pulse-slow">ONAC</span>'
                                 : ""
                             }
                             ${
                               server.isOnacMember
-                                ? '<span class="ml-2 bg-green-500 text-green-900 px-2 py-1 rounded-full text-xs font-bold">ONAC member</span>'
+                                ? '<span class="bg-green-500 text-green-900 px-3 py-1 rounded-full text-xs font-bold animate-bounce-slow">ONAC member</span>'
                                 : ""
                             }
-                        </h2>
-                        <span class="text-sm font-semibold ${
-                          server.isOnac ? "text-yellow-400" : "text-primary-400"
-                        }">#${server.rank}</span>
+                            <span class="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-xs font-bold">#${
+                              server.rank
+                            }</span>
+                        </div>
                     </div>
-                    <p class="text-gray-300 mb-2">Miembros: ${server.members.toLocaleString()}</p>
+                    <p class="text-gray-300 mb-3 text-lg">Miembros: ${server.members.toLocaleString()}</p>
                     <div class="relative pt-1">
                         <div class="flex mb-2 items-center justify-between">
                             <div>
@@ -355,10 +429,10 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-700">
+                        <div class="overflow-hidden h-3 mb-4 text-xs flex rounded-full bg-gray-700">
                             <div style="width:${percentageDomination}%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${
             server.isOnac ? "bg-yellow-500" : "bg-primary-500"
-          } "></div>
+          } progress-bar"></div>
                         </div>
                     </div>
                 `;
@@ -381,7 +455,10 @@
 
         // Update button styles
         [filterAllButton, filterOnacButton, filterNonOnacButton].forEach(
-          (button) => button.classList.remove("bg-primary-600")
+          (button) => {
+            button.classList.remove("bg-primary-600");
+            button.classList.add("bg-gray-700");
+          }
         );
 
         const activeButton =
@@ -390,6 +467,7 @@
             : filter === "onac"
             ? filterOnacButton
             : filterNonOnacButton;
+        activeButton.classList.remove("bg-gray-700");
         activeButton.classList.add("bg-primary-600");
       }
 
@@ -423,7 +501,7 @@
 
         pageNumbersContainer.innerHTML = "";
 
-        const maxVisiblePages = 5;
+        const maxVisiblePages = 3;
         let startPage = Math.max(
           1,
           currentPage - Math.floor(maxVisiblePages / 2)
@@ -456,11 +534,11 @@
       function addPageButton(pageNum) {
         const button = document.createElement("button");
         button.textContent = pageNum;
-        button.className = `px-3 py-1 rounded-md transition-colors ${
+        button.className = `px-4 py-2 rounded-full transition-all duration-300 ${
           pageNum === currentPage
             ? "bg-primary-600 text-white"
             : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-        }`;
+        } transform hover:scale-105`;
         button.addEventListener("click", () => changePage(pageNum));
         pageNumbersContainer.appendChild(button);
       }
