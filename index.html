@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Top de Servidores</title>
+    <title>Nautic ClanList v1.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -12,22 +12,28 @@
           extend: {
             colors: {
               primary: {
-                50: "#f0f9ff",
-                100: "#e0f2fe",
-                200: "#bae6fd",
-                300: "#7dd3fc",
-                400: "#38bdf8",
-                500: "#0ea5e9",
-                600: "#0284c7",
-                700: "#0369a1",
-                800: "#075985",
-                900: "#0c4a6e",
-                950: "#082f49",
+                50: "#eef7ff",
+                100: "#d9edff",
+                200: "#bce0ff",
+                300: "#8ccbff",
+                400: "#54adff",
+                500: "#2b8fff",
+                600: "#1a70ff",
+                700: "#1259ff",
+                800: "#1747cc",
+                900: "#1a409f",
+                950: "#142761",
               },
+              dark: {
+                800: "#1a1b23",
+                900: "#13141a",
+                950: "#0c0c0f",
+              }
             },
             animation: {
               "fade-in": "fadeIn 0.5s ease-out",
               "slide-up": "slideUp 0.5s ease-out",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
             },
             keyframes: {
               fadeIn: {
@@ -40,98 +46,348 @@
               },
             },
           },
-          fontFamily: {
-            sans: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "BlinkMacSystemFont",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
-          },
         },
       };
     </script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
+      :root {
+        --card-gradient: linear-gradient(160deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+        --hover-gradient: linear-gradient(160deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
+        --top1-gradient: linear-gradient(160deg, rgba(79, 70, 229, 0.15), rgba(45, 39, 130, 0.3));
+        --top2-gradient: linear-gradient(160deg, rgba(71, 85, 105, 0.15), rgba(51, 65, 85, 0.3));
+        --top3-gradient: linear-gradient(160deg, rgba(234, 179, 8, 0.15), rgba(161, 98, 7, 0.3));
+      }
+
+      body {
+        background: radial-gradient(circle at top right, #1e1b4b, #111827 40%, #030712 90%);
+        min-height: 100vh;
+      }
+
+      .title-gradient {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 2em rgba(59, 130, 246, 0.2));
+      }
+
+      .stats-card {
+        background: rgba(17, 24, 39, 0.6);
+        border: 1px solid rgba(59, 130, 246, 0.1);
+        backdrop-filter: blur(8px);
+        transition: all 0.3s ease;
+      }
+
+      .stats-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(59, 130, 246, 0.2);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .stats-number {
+        color: #60a5fa;
+        font-weight: 700;
+      }
+
+      .server-card {
+        background: var(--card-gradient);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.3s ease;
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+
+      .server-card:hover {
+        transform: translateY(-4px);
+        background: var(--hover-gradient);
+        border-color: rgba(59, 130, 246, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      }
+
+      .top-1 {
+        background: var(--top1-gradient);
+        border-color: rgba(79, 70, 229, 0.4);
+        transform: scale(1.02);
+        box-shadow: 0 8px 30px rgba(79, 70, 229, 0.15);
+      }
+
+      .top-2 {
+        background: var(--top2-gradient);
+        border-color: rgba(71, 85, 105, 0.4);
+        transform: scale(1.01);
+        box-shadow: 0 8px 25px rgba(71, 85, 105, 0.15);
+      }
+
+      .top-3 {
+        background: var(--top3-gradient);
+        border-color: rgba(234, 179, 8, 0.4);
+        transform: scale(1.005);
+        box-shadow: 0 8px 20px rgba(234, 179, 8, 0.15);
+      }
+
+      .top-1:hover {
+        transform: translateY(-4px) scale(1.02);
+      }
+
+      .top-2:hover {
+        transform: translateY(-4px) scale(1.01);
+      }
+
+      .top-3:hover {
+        transform: translateY(-4px) scale(1.005);
+      }
+
+      .rank-badge {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        padding: 0.35rem 0.85rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(4px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .top-1 .rank-badge {
+        background: rgba(79, 70, 229, 0.2);
+        border-color: rgba(79, 70, 229, 0.4);
+        color: #818cf8;
+      }
+
+      .top-2 .rank-badge {
+        background: rgba(71, 85, 105, 0.2);
+        border-color: rgba(71, 85, 105, 0.4);
+        color: #94a3b8;
+      }
+
+      .top-3 .rank-badge {
+        background: rgba(234, 179, 8, 0.2);
+        border-color: rgba(234, 179, 8, 0.4);
+        color: #fbbf24;
+      }
+
       .progress-bar {
-        transition: width 0.5s ease-out;
+        height: 0.5rem;
+        border-radius: 9999px;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .top-1 .progress-bar {
+        background: linear-gradient(90deg, #4f46e5, #818cf8);
+      }
+
+      .top-2 .progress-bar {
+        background: linear-gradient(90deg, #475569, #94a3b8);
+      }
+
+      .top-3 .progress-bar {
+        background: linear-gradient(90deg, #eab308, #fbbf24);
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-slide-up {
+        animation: slideUp 0.5s ease forwards;
+      }
+
+      .search-input {
+        background: rgba(17, 24, 39, 0.8);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .search-input:focus {
+        background: rgba(17, 24, 39, 0.9);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+      }
+
+      .filter-button {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .filter-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+      }
+
+      .filter-button.active {
+        background: var(--accent-gradient);
+        border-color: transparent;
+      }
+
+      @keyframes fadeInScale {
+        0% {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .animate-fade-in-scale {
+        animation: fadeInScale 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .pagination-button {
+        background: rgba(17, 24, 39, 0.6);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .pagination-button:hover:not(:disabled) {
+        background: rgba(59, 130, 246, 0.2);
+        border-color: rgba(59, 130, 246, 0.4);
+        transform: translateY(-1px);
+      }
+
+      .pagination-button.active {
+        background: rgba(59, 130, 246, 0.2);
+        border-color: rgba(59, 130, 246, 0.4);
+        color: #60a5fa;
+      }
+
+      .pagination-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      @media (max-width: 768px) {
+        .stats-card {
+          padding: 1rem;
+        }
+
+        .stats-number {
+          font-size: 1.5rem;
+        }
+
+        .server-card {
+          margin-bottom: 1rem;
+        }
+
+        .rank-badge {
+          right: 0.5rem;
+          top: 0.5rem;
+        }
+
+        .progress-bar {
+          height: 0.375rem;
+        }
+      }
+
+      /* Mejorar el espaciado en móvil */
+      .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      @media (min-width: 768px) {
+        .container {
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
       }
     </style>
   </head>
-  <body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+  <body class="bg-gradient-to-br from-dark-950 via-dark-900 to-dark-800 text-gray-100 font-sans min-h-screen">
     <div class="container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold text-center mb-8 text-primary-400">
-        Top de Servidores
-      </h1>
+      <div class="text-center mb-12 relative">
+        <div class="inline-flex flex-col items-center">
+          <h1 class="text-3xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-blue-500 via-primary-500 to-indigo-500 bg-clip-text text-transparent tracking-tight">
+            Nautic ClanList
+          </h1>
+          <div class="flex items-center gap-3">
+            <div class="h-px w-12 bg-gradient-to-r from-transparent via-primary-500/50 to-transparent"></div>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-500/10 text-primary-400 border border-primary-500/20">
+              <span class="w-2 h-2 rounded-full bg-primary-400 mr-2 animate-pulse-slow"></span>
+              Version 1.1
+            </span>
+            <div class="h-px w-12 bg-gradient-to-r from-transparent via-primary-500/50 to-transparent"></div>
+          </div>
+        </div>
+      </div>
 
       <!-- Estadísticas generales -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div class="bg-gray-800 p-4 rounded-lg shadow-lg animate-fade-in">
-          <p id="totalServers" class="text-2xl font-semibold text-primary-400">
-            0
-          </p>
-          <p class="text-sm text-gray-400">Servidores Totales</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="stats-card p-6 rounded-xl shadow-lg animate-fade-in">
+          <div class="flex items-center gap-4">
+            <div class="p-3 rounded-lg bg-blue-500/10">
+              <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              </svg>
+            </div>
+            <div>
+              <p id="totalServers" class="stats-number text-3xl mb-1">0</p>
+              <p class="text-sm font-medium text-gray-400">Servidores Totales</p>
+            </div>
+          </div>
         </div>
-        <div
-          class="bg-gray-800 p-4 rounded-lg shadow-lg animate-fade-in"
-          style="animation-delay: 0.1s"
-        >
-          <p id="totalMembers" class="text-2xl font-semibold text-primary-400">
-            0
-          </p>
-          <p class="text-sm text-gray-400">Miembros Totales</p>
+        <div class="stats-card p-6 rounded-xl shadow-lg animate-fade-in" style="animation-delay: 0.1s">
+          <div class="flex items-center gap-4">
+            <div class="p-3 rounded-lg bg-blue-500/10">
+              <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <p id="totalMembers" class="stats-number text-3xl font-bold mb-1">0</p>
+              <p class="text-sm font-medium text-gray-400">Miembros Totales</p>
+            </div>
+          </div>
         </div>
-        <div
-          class="bg-gray-800 p-4 rounded-lg shadow-lg animate-fade-in"
-          style="animation-delay: 0.2s"
-        >
-          <p id="onacMembers" class="text-2xl font-semibold text-primary-400">
-            0
-          </p>
-          <p class="text-sm text-gray-400">Miembros ONAC</p>
+        <div class="stats-card p-6 rounded-xl shadow-lg animate-fade-in" style="animation-delay: 0.2s">
+          <div class="flex items-center gap-4">
+            <div class="p-3 rounded-lg bg-blue-500/10">
+              <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <p id="onacMembers" class="stats-number text-3xl font-bold mb-1">0</p>
+              <p class="text-sm font-medium text-gray-400">Miembros ONAC</p>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Filtros y búsqueda -->
-      <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
-        <div class="flex flex-wrap gap-2">
-          <button
-            id="filterAll"
-            class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
-          >
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+        <div class="flex flex-wrap gap-2 w-full md:w-auto">
+          <button id="filterAll" class="filter-button px-3 md:px-4 py-2 bg-primary-600 text-white rounded-lg transition-all font-medium hover:shadow-lg hover:shadow-primary-500/20 text-sm md:text-base">
             Todos
           </button>
-          <button
-            id="filterOnac"
-            class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
-          >
+          <button id="filterOnac" class="filter-button px-3 md:px-4 py-2 bg-dark-800 text-gray-300 rounded-lg transition-all font-medium border border-gray-700 hover:shadow-lg hover:shadow-primary-500/20 text-sm md:text-base">
             ONAC
           </button>
-          <button
-            id="filterNonOnac"
-            class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
-          >
+          <button id="filterNonOnac" class="filter-button px-3 md:px-4 py-2 bg-dark-800 text-gray-300 rounded-lg transition-all font-medium border border-gray-700 hover:shadow-lg hover:shadow-primary-500/20 text-sm md:text-base">
             No ONAC
           </button>
         </div>
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Buscar servidor..."
-          class="px-4 py-2 bg-gray-800 text-white rounded-md border border-gray-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors"
-        />
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Buscar servidor..." 
+          class="search-input px-4 py-2 text-white rounded-lg border border-gray-700 w-full md:w-64 placeholder-gray-500 text-sm md:text-base"
+        >
       </div>
 
       <!-- Lista de servidores -->
@@ -144,18 +400,12 @@
       </p>
 
       <!-- Paginación -->
-      <div class="flex justify-center items-center mt-8 space-x-2">
-        <button
-          id="prevPage"
-          class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
+      <div class="flex justify-center items-center mt-8 space-x-1 md:space-x-2">
+        <button id="prevPage" class="pagination-button px-3 md:px-4 py-1 md:py-2 text-sm md:text-base">
           Anterior
         </button>
-        <div id="pageNumbers" class="flex items-center space-x-2"></div>
-        <button
-          id="nextPage"
-          class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
+        <div id="pageNumbers" class="flex items-center space-x-1 md:space-x-2"></div>
+        <button id="nextPage" class="pagination-button px-3 md:px-4 py-1 md:py-2 text-sm md:text-base">
           Siguiente
         </button>
       </div>
@@ -184,6 +434,13 @@
       const filterOnacButton = document.getElementById("filterOnac");
       const filterNonOnacButton = document.getElementById("filterNonOnac");
 
+      // Añadir estas constantes al inicio del script
+      const cardStyles = {
+        1: "bg-gradient-to-br from-dark-800 via-dark-900 to-yellow-950 border-yellow-500/20",
+        2: "bg-gradient-to-br from-dark-800 via-dark-900 to-gray-800 border-gray-500/20",
+        3: "bg-gradient-to-br from-dark-800 via-dark-900 to-amber-950 border-amber-500/20"
+      };
+
       // Función para cargar los datos de los servidores
       async function loadServerData() {
         try {
@@ -191,18 +448,31 @@
             fetch("lista_completa_servidores.json"),
             fetch("onac.json"),
           ]);
+
+          if (!serversResponse.ok || !onacResponse.ok) {
+            throw new Error('Error al cargar los datos');
+          }
+
           const serversData = await serversResponse.json();
           const onacData = await onacResponse.json();
 
-          allServers = serversData.filter(
+          console.log('Servidores cargados:', serversData.length);
+          console.log('Datos ONAC cargados:', onacData.length);
+
+          // Filtrar servidores duplicados por nombre
+          const uniqueServers = Array.from(
+            new Map(serversData.map(server => [server.name, server])).values()
+          );
+
+          allServers = uniqueServers.filter(
             (server) => server.name !== "ONAC NauticMC"
           );
 
           // Procesar los datos de ONAC
-          onacServers = onacData
-            .map((onacServerName) => {
-              const server = allServers.find((s) => s.name === onacServerName);
-              if (server) {
+          const onacSet = new Set(onacData);
+          onacServers = allServers
+            .map((server) => {
+              if (onacSet.has(server.name)) {
                 server.isOnacMember = true;
                 return server;
               }
@@ -221,10 +491,10 @@
             name: "ONAC (Total)",
             members: onacTotalMembers,
             isOnac: true,
-            rank: 0, // Se asignará después
+            rank: 0,
           };
 
-          // Añadir el servidor virtual de ONAC a la lista de todos los servidores
+          // Añadir el servidor virtual de ONAC a la lista
           allServers.push(onacVirtualServer);
 
           // Ordenar los servidores por número de miembros
@@ -235,27 +505,28 @@
             server.rank = index + 1;
           });
 
+          console.log('Procesamiento completado. Servidores totales:', allServers.length);
+
           filteredServers = allServers;
           updateStats();
           renderServers();
 
           // Event listeners
           searchInput.addEventListener("input", handleSearch);
-          prevPageButton.addEventListener("click", () =>
-            changePage(currentPage - 1)
-          );
-          nextPageButton.addEventListener("click", () =>
-            changePage(currentPage + 1)
-          );
+          prevPageButton.addEventListener("click", () => changePage(currentPage - 1));
+          nextPageButton.addEventListener("click", () => changePage(currentPage + 1));
           filterAllButton.addEventListener("click", () => filterServers("all"));
-          filterOnacButton.addEventListener("click", () =>
-            filterServers("onac")
-          );
-          filterNonOnacButton.addEventListener("click", () =>
-            filterServers("non-onac")
-          );
+          filterOnacButton.addEventListener("click", () => filterServers("onac"));
+          filterNonOnacButton.addEventListener("click", () => filterServers("non-onac"));
+
         } catch (error) {
-          console.error("Error fetching data:", error);
+          console.error("Error al cargar los datos:", error);
+          serverList.innerHTML = `
+            <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-center">
+              <p class="text-red-400 font-medium">Error al cargar los datos</p>
+              <p class="text-gray-400 text-sm mt-2">Por favor, intenta recargar la página</p>
+            </div>
+          `;
         }
       }
 
@@ -303,65 +574,55 @@
 
         serversToShow.forEach((server, index) => {
           const card = document.createElement("div");
-          card.className =
-            "bg-gray-800 p-4 rounded-lg shadow-lg animate-slide-up";
-          card.style.animationDelay = `${index * 0.05}s`;
+          const isTop3 = server.rank <= 3;
+          
+          card.className = `server-card p-4 md:p-6 rounded-xl animate-slide-up relative ${
+            isTop3 ? `top-${server.rank}` : ''
+          } ${index === 3 ? 'mt-6' : ''}`;
+          card.style.animationDelay = `${index * 0.1}s`;
 
-          const percentageDomination = (
-            (server.members / totalMembers) *
-            100
-          ).toFixed(2);
+          const percentageDomination = ((server.members / totalMembers) * 100).toFixed(2);
 
           card.innerHTML = `
-                    <div class="flex items-center justify-between mb-2">
-                        <h2 class="text-xl font-semibold ${
-                          server.isOnac ? "text-yellow-400" : "text-primary-400"
-                        }">
-                            ${server.name}
-                            ${
-                              server.isOnac
-                                ? '<span class="ml-2 bg-yellow-500 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold">ONAC</span>'
-                                : ""
-                            }
-                            ${
-                              server.isOnacMember
-                                ? '<span class="ml-2 bg-green-500 text-green-900 px-2 py-1 rounded-full text-xs font-bold">ONAC member</span>'
-                                : ""
-                            }
-                        </h2>
-                        <span class="text-sm font-semibold ${
-                          server.isOnac ? "text-yellow-400" : "text-primary-400"
-                        }">#${server.rank}</span>
-                    </div>
-                    <p class="text-gray-300 mb-2">Miembros: ${server.members.toLocaleString()}</p>
-                    <div class="relative pt-1">
-                        <div class="flex mb-2 items-center justify-between">
-                            <div>
-                                <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full ${
-                                  server.isOnac
-                                    ? "text-yellow-200 bg-yellow-900"
-                                    : "text-primary-200 bg-primary-900"
-                                }">
-                                    Dominio
-                                </span>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-xs font-semibold inline-block ${
-                                  server.isOnac
-                                    ? "text-yellow-400"
-                                    : "text-primary-400"
-                                }">
-                                    ${percentageDomination}%
-                                </span>
-                            </div>
-                        </div>
-                        <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-700">
-                            <div style="width:${percentageDomination}%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${
-            server.isOnac ? "bg-yellow-500" : "bg-primary-500"
-          } "></div>
-                        </div>
-                    </div>
-                `;
+            <div class="rank-badge text-xs md:text-sm px-2 md:px-3 py-1">
+              #${server.rank}
+            </div>
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
+              <h2 class="text-lg md:text-xl font-bold text-white flex flex-wrap items-center gap-2">
+                ${server.name}
+                ${
+                  server.isOnac
+                    ? '<span class="mt-1 md:mt-0 ml-0 md:ml-2 bg-indigo-500/20 text-indigo-400 px-2 md:px-3 py-1 rounded-full text-xs font-semibold border border-indigo-500/20">ONAC</span>'
+                    : ""
+                }
+                ${
+                  server.isOnacMember
+                    ? '<span class="mt-1 md:mt-0 ml-0 md:ml-2 bg-emerald-500/20 text-emerald-400 px-2 md:px-3 py-1 rounded-full text-xs font-semibold border border-emerald-500/20">ONAC member</span>'
+                    : ""
+                }
+              </h2>
+            </div>
+            <p class="text-gray-400 mb-4 font-medium">
+              <span class="text-lg text-gray-200">${server.members.toLocaleString()}</span> miembros
+            </p>
+            <div class="relative pt-1">
+              <div class="flex mb-2 items-center justify-between">
+                <div>
+                  <span class="text-xs font-semibold inline-block py-1 px-3 uppercase rounded-full bg-gray-800/80 text-gray-300">
+                    Dominio
+                  </span>
+                </div>
+                <div class="text-right">
+                  <span class="text-sm font-semibold text-gray-300">
+                    ${percentageDomination}%
+                  </span>
+                </div>
+              </div>
+              <div class="overflow-hidden h-2 mb-4 text-xs flex rounded-full bg-gray-800/50">
+                <div style="width:${percentageDomination}%" class="progress-bar"></div>
+              </div>
+            </div>
+          `;
 
           serverList.appendChild(card);
         });
@@ -456,20 +717,18 @@
       function addPageButton(pageNum) {
         const button = document.createElement("button");
         button.textContent = pageNum;
-        button.className = `px-3 py-1 rounded-md transition-colors ${
-          pageNum === currentPage
-            ? "bg-primary-600 text-white"
-            : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+        button.className = `pagination-button ${
+          pageNum === currentPage ? "active" : ""
         }`;
         button.addEventListener("click", () => changePage(pageNum));
         pageNumbersContainer.appendChild(button);
       }
 
       function addEllipsis() {
-        const ellipsis = document.createElement("span");
-        ellipsis.textContent = "...";
-        ellipsis.className = "px-2 text-gray-400";
-        pageNumbersContainer.appendChild(ellipsis);
+        const span = document.createElement("span");
+        span.textContent = "...";
+        span.className = "px-2 text-gray-400";
+        pageNumbersContainer.appendChild(span);
       }
 
       // Cargar los datos de los servidores al iniciar la página
