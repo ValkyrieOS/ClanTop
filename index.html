@@ -391,7 +391,7 @@
       </div>
 
       <!-- Lista de servidores -->
-      <div id="serverList" class="space-y-4"></div>
+      <div id="serverList" class="space-y-6"></div>
       <p
         id="noResults"
         class="text-center text-gray-400 mt-8 hidden animate-fade-in"
@@ -642,7 +642,10 @@
 
         // Update button styles
         [filterAllButton, filterOnacButton, filterNonOnacButton].forEach(
-          (button) => button.classList.remove("bg-primary-600")
+          (button) => {
+            button.classList.remove("bg-primary-600");
+            button.classList.add("bg-gray-700");
+          }
         );
 
         const activeButton =
@@ -651,6 +654,7 @@
             : filter === "onac"
             ? filterOnacButton
             : filterNonOnacButton;
+        activeButton.classList.remove("bg-gray-700");
         activeButton.classList.add("bg-primary-600");
       }
 
@@ -684,7 +688,7 @@
 
         pageNumbersContainer.innerHTML = "";
 
-        const maxVisiblePages = 5;
+        const maxVisiblePages = 3;
         let startPage = Math.max(
           1,
           currentPage - Math.floor(maxVisiblePages / 2)
